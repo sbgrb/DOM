@@ -118,8 +118,44 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
-var div = dom.create('<td>1</td>');
+var div = dom.create('<div>newDiv</div>');
 console.log(div);
+dom.after(test, div);
+var div2 = dom.create('<div id="parent"></div>');
+dom.wrap(test, div2);
+dom.attr(test, 'title', 'hello');
+var title = dom.attr(test, 'title');
+console.log('title:${{title}}');
+dom.text(test, 'new string');
+dom.style(test, {
+  border: '1px solid red',
+  color: 'blue'
+});
+console.log(dom.style(test, 'border'));
+dom.class.add(test, 'red');
+dom.class.add(test, 'blue');
+dom.class.remove(test, 'red');
+
+var fn = function fn() {
+  console.log('点击了');
+};
+
+dom.on(test, 'click', fn); // dom.off(test,'click',fn)
+
+var testDiv = dom.find('#test')[0];
+console.log(testDiv);
+var test2 = dom.find('#test2')[0];
+console.log(dom.find('.red', test2)[0]);
+console.log(dom.parent(test));
+var a2 = dom.find('#a2')[0];
+console.log(dom.siblings(a2));
+console.log(dom.next(a2));
+console.log(dom.previous(a2));
+var r = dom.find('#travel')[0];
+dom.each(dom.children(r), function (n) {
+  return dom.style(n, 'color', 'red');
+});
+console.log(dom.index(a2));
 },{}],"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -148,7 +184,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62057" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57230" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

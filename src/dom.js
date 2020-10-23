@@ -1,26 +1,33 @@
 window.dom = {
+    // 创建节点
     create(string){
         const container = document.createElement('template');
         container.innerHTML = string.trim();
         return container.content.firstChild
     },
+    // 新增弟弟节点
     after(node,node2){
         node.parentNode.insertBefore(node2,node.nextSibling)
     },
+    //  新增哥哥节点
     before(node,node2) {
         node.parentNode.insertBefore(node2,node)
     },
-    append(node){
+    // 新增儿子节点
+    append(parent,node){
         parent.appendChild(node)
     },
+    // 新增父辈节点
     wrap(node,parent){
         dom.before(node,parent)
         dom.append(parent,node)
     },
+    // 删除节点
     remove(node){
         node.parentNode.removeChild(node)
         return node
     },
+    // 删除后代节点
     empty(node) {
         const array = []
         let x = node.firstChild
@@ -30,13 +37,15 @@ window.dom = {
         }
         return array
     },
+    // 用于读写属性
     attr(node,name,value){
         if (arguments.length === 3){
-            node.setAttribute(name.value)
+            node.setAttribute(name,value)
         }else if(arguments.length === 2){
             return node.getAttribute(name)
         }
     },
+    // 用于读写文本内容
     text(node,string){
         if (arguments.length === 2){
             if ('innerText' in node){
@@ -52,6 +61,7 @@ window.dom = {
             }
         }
     },
+    //  用于读写HTML内容
     html(node,string){
         if (arguments.length === 2){
             node.innerHTML = string
@@ -59,6 +69,7 @@ window.dom = {
             return node.innerHTML
         }
     },
+    // 用于修改style
     style(node,name,value){
         if (arguments.length === 3){
             node.style[name] = value
@@ -73,34 +84,45 @@ window.dom = {
         }
     },
     class:{
+
+        // 添加
         add(node,className){
             node.classList.add(className)
         },
+        // 删除
         remove(node,className) {
             node.classList.remove(className)
         },
+        // 包含
         has(node,className){
             return node.classList.contains(className)
         }
     },
+    // 添加事件监听
     on(node,eventName,fn){
         node.addEventListener(eventName,fn)
     },
+    // 移除事件监听
     off(node,eventName,fn){
         node.removeEventListener(eventName,fn)
     },
+    // 获取标签
     find(selector,scope){
         return (scope || document).querySelectorAll(selector)
     },
+    // 获取父元素
     parent(node){
         return node.parentNode
     },
+    // 获取子元素
     children(node){
         return node.children
     },
+    // 获取兄弟姐妹元素
     siblings(node){
       return Array.from(node.parentNode.children).filter(n=>n!==node)
     },
+    // 获取下一个节点
     next(node){
         let x = node.nextSibling
         while (x && x.nodeType === 3){
@@ -108,6 +130,7 @@ window.dom = {
         }
         return x
     },
+    // 上一个节点
     previous(node){
         let x = node.previousSibling
         while (x && x.nodeType === 3){
@@ -115,11 +138,13 @@ window.dom = {
         }
         return x
     },
+    // 遍历所有节点
     each(nodeList,fn){
         for (let i =0;i<nodeList.length;i++){
             fn.call(null,nodeList[i])
         }
     },
+    //  获取排行
     index(node){
         const list = dom.children(node.parentNode)
         let i

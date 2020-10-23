@@ -117,177 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"dom.js":[function(require,module,exports) {
-window.dom = {
-  // 创建节点
-  create: function create(string) {
-    var container = document.createElement('template');
-    container.innerHTML = string.trim();
-    return container.content.firstChild;
-  },
-  // 新增弟弟节点
-  after: function after(node, node2) {
-    node.parentNode.insertBefore(node2, node.nextSibling);
-  },
-  //  新增哥哥节点
-  before: function before(node, node2) {
-    node.parentNode.insertBefore(node2, node);
-  },
-  // 新增儿子节点
-  append: function append(parent, node) {
-    parent.appendChild(node);
-  },
-  // 新增父辈节点
-  wrap: function wrap(node, parent) {
-    dom.before(node, parent);
-    dom.append(parent, node);
-  },
-  // 删除节点
-  remove: function remove(node) {
-    node.parentNode.removeChild(node);
-    return node;
-  },
-  // 删除后代节点
-  empty: function empty(node) {
-    var array = [];
-    var x = node.firstChild;
+})({"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-    while (x) {
-      array.push(dom.remove(node.firstChild));
-      x = node.firstChild;
-    }
-
-    return array;
-  },
-  // 用于读写属性
-  attr: function attr(node, name, value) {
-    if (arguments.length === 3) {
-      node.setAttribute(name, value);
-    } else if (arguments.length === 2) {
-      return node.getAttribute(name);
-    }
-  },
-  // 用于读写文本内容
-  text: function text(node, string) {
-    if (arguments.length === 2) {
-      if ('innerText' in node) {
-        node.innerText = string;
-      } else {
-        node.textContent = string;
-      }
-    } else if (arguments.length === 1) {
-      if ('innerText' in node) {
-        return node.innerText;
-      } else {
-        return node.textContent;
-      }
-    }
-  },
-  //  用于读写HTML内容
-  html: function html(node, string) {
-    if (arguments.length === 2) {
-      node.innerHTML = string;
-    } else if (arguments.length === 1) {
-      return node.innerHTML;
-    }
-  },
-  // 用于修改style
-  style: function style(node, name, value) {
-    if (arguments.length === 3) {
-      node.style[name] = value;
-    }
-
-    if (arguments.length === 2) {
-      if (typeof name === 'string') {
-        return node.style[name];
-      } else if (name instanceof Object) {
-        for (var key in name) {
-          node.style[key] = name[key];
-        }
-      }
-    }
-  },
-  class: {
-    // 添加
-    add: function add(node, className) {
-      node.classList.add(className);
-    },
-    // 删除
-    remove: function remove(node, className) {
-      node.classList.remove(className);
-    },
-    // 包含
-    has: function has(node, className) {
-      return node.classList.contains(className);
-    }
-  },
-  // 添加事件监听
-  on: function on(node, eventName, fn) {
-    node.addEventListener(eventName, fn);
-  },
-  // 移除事件监听
-  off: function off(node, eventName, fn) {
-    node.removeEventListener(eventName, fn);
-  },
-  // 获取标签
-  find: function find(selector, scope) {
-    return (scope || document).querySelectorAll(selector);
-  },
-  // 获取父元素
-  parent: function parent(node) {
-    return node.parentNode;
-  },
-  // 获取子元素
-  children: function children(node) {
-    return node.children;
-  },
-  // 获取兄弟姐妹元素
-  siblings: function siblings(node) {
-    return Array.from(node.parentNode.children).filter(function (n) {
-      return n !== node;
-    });
-  },
-  // 获取下一个节点
-  next: function next(node) {
-    var x = node.nextSibling;
-
-    while (x && x.nodeType === 3) {
-      x = x.nextSibling;
-    }
-
-    return x;
-  },
-  // 上一个节点
-  previous: function previous(node) {
-    var x = node.previousSibling;
-
-    while (x && x.nodeType === 3) {
-      x = x.previousSibling;
-    }
-
-    return x;
-  },
-  // 遍历所有节点
-  each: function each(nodeList, fn) {
-    for (var i = 0; i < nodeList.length; i++) {
-      fn.call(null, nodeList[i]);
-    }
-  },
-  //  获取排行
-  index: function index(node) {
-    var list = dom.children(node.parentNode);
-    var i;
-
-    for (i = 0; i < list.length; i++) {
-      if (list[i] === node) {
-        break;
-      }
-    }
-
-    return i;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-};
-},{}],"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js"}],"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -491,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js","dom.js"], null)
-//# sourceMappingURL=/dom.1d0b6d56.js.map
+},{}]},{},["C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map
